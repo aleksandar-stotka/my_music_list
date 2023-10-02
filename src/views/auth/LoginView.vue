@@ -2,12 +2,13 @@
     <form @submit.prevent="handleSubmit">
 
      <h3>Login</h3>
-
+      
      <input type="email" placeholder="email" v-model="email">
      <input type="password" placeholder="Password" v-model="password">
      <div v-if="error">{{ error }}</div>
-     <button>login</button>
-
+     <button v-if="!isPending">login</button>
+     <button disabled v-if="isPending">loading...</button>
+ 
     </form>
 </template>
 
@@ -17,7 +18,7 @@ import useLogin from "@/composables/useLogin"
 
 export default {
     setup() {
-      const {error, login} = useLogin()
+      const {error, login, isPending} = useLogin()
 
         const email = ref("")
         const password = ref('')
@@ -37,7 +38,7 @@ export default {
       
 
 
-        return {email,password, error,handleSubmit}
+        return {email,password, error,handleSubmit,isPending}
     }
 };
 </script>
